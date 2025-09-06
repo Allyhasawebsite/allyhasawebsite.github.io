@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Header = () => {
 
     const date = new Date();
