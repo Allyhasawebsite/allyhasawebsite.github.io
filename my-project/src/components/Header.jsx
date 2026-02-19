@@ -1,3 +1,5 @@
+import Navbar from "./Navbar";
+
 const Header = () => {
 
     const date = new Date();
@@ -8,8 +10,9 @@ const Header = () => {
 
     return (
         <header className="fixed top-0 left-0 w-full h-20 flex items-center z-40 font-mono text-[#28282B] text-xs">
-    
 
+            <Navbar />
+            
             <div className="md:justify-self-center absolute top-0 right-0 font-mono">
                 
                 <button className=" rounded-bl-lg outline-[#28282B] outline-solid">
