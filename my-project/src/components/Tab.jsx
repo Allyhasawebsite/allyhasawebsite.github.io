@@ -24,15 +24,36 @@ const Tab = () => {
         };
 
         const elementDrag = (e) => {
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
 
-        elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-        elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+            // calculate new positions
+            let newTop = elmnt.offsetTop - pos2;
+            let newLeft = elmnt.offsetLeft - pos1;
+
+            // get element dimensions
+            const rect = elmnt.getBoundingClientRect();
+            const elWidth = rect.width;
+            const elHeight = rect.height;
+
+            // get viewport dimensions
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            // clamp values so the element stays in viewport
+            if (newTop < 0) newTop = 0;
+            if (newLeft < 0) newLeft = 0;
+            if (newTop + elHeight > vh) newTop = vh - elHeight;
+            if (newLeft + elWidth > vw) newLeft = vw - elWidth;
+
+            // apply
+            elmnt.style.top = newTop + "px";
+            elmnt.style.left = newLeft + "px";
         };
+
 
         const closeDragElement = () => {
         document.onmouseup = null;
