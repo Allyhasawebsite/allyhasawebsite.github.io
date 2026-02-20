@@ -1,5 +1,6 @@
 import Navbar from "./Navbar";
 
+/* Testing */
 const Header = () => {
 
     const date = new Date();
