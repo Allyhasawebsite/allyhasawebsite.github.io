@@ -81,9 +81,8 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
 
   return (
     <nav className={`
-      fixed bottom-0 left-1/2 -translate-x-1/2
-      flex justify-center font-mono z-50 
-      backdrop-blur-sm
+      fixed bottom-3 left-1/2 -translate-x-1/2
+      flex justify-center font-mono z-50
     `}>
 
       <div className="flex gap-3 px-4">
@@ -99,7 +98,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
               outline outline-1 outline-[#28282B] rounded-md
               first:rounded-tl-lg first:rounded-bl-lg
               last:rounded-tr-lg last:rounded-br-lg
-              z-10 bg-transparent
+              z-10 
               ${className?.includes('active')
                 ? 'bg-[#282a2b] text-white'
                 : 'text-[#28282B] hover:text-white'
@@ -111,8 +110,6 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
               <img src={`/images/icons/${icon}`} alt={label} className="w-full h-full object-contain" />
             </div>
 
-            {/* visible label beneath icon */}
-            <span className="text-xs mt-2 text-center break-words">{label}</span>
           </a>
         ))}
       </div>
