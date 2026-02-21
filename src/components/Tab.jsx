@@ -89,7 +89,7 @@ const Tab = ({ activeTab, activeTabs, setActiveTabs }) => {
 
     return (
 
-        <div ref={footerRef} id="mydiv" className="absolute left-1/2 rounded-lg -translate-x-1/2 w-40 bg-sky-400 cursor-move p-2" style={{ top: "calc(100vh - 100px)" }}>
+        <div ref={footerRef} id="mydiv" className="absolute left-1/2 rounded-lg -translate-x-1/2 w-40 bg-sky-400 cursor-move p-2">
 
             <div ref={headerRef} id="mydivheader" className="bg-sky-600 text-white p-1 cursor-move flex justify-between">
                 <span>{activeTab}</span>

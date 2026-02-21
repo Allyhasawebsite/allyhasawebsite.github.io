@@ -81,45 +81,50 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
 
   return (
     <nav className={`
-      fixed bottom-0 left-1/2 -translate-x-1/2 mb-4
-      flex font-mono z-50 relative
+      fixed bottom-0 left-1/2 -translate-x-1/2
+      flex justify-center font-mono z-50 
+      backdrop-blur-sm
     `}>
 
-      {navItems.map(({ label, link, className, ref, tab, icon }, key) => (
-        <a
-          href={link}
-          key={key}
-          ref={ref}
-          onClick={(e) => activeCurrentLink(e, tab)}
-          aria-label={label}
-          className={`
-            relative px-4 py-1 text-sm
-            outline outline-1 outline-[#28282B]
-            -ml-px first:ml-0
-            first:rounded-tl-lg first:rounded-bl-lg
-            last:rounded-tr-lg last:rounded-br-lg
-            z-10
-            ${className?.includes('active')
-              ? 'bg-[#282a2b] text-white'
-              : 'bg-transparent text-[#28282B] hover:text-white'
-            }
-          `}
-        >
-          {/* show icon from public/images/icons; replace filenames above to match your files */}
-          <img src={`/images/icons/${icon}`} alt="" className="w-5 h-5 inline-block" />
-          {/* keep label for screen readers */}
-          <span className="sr-only">{label}</span>
-        </a>
-      ))}
+      <div className="flex gap-3 px-4">
+        {navItems.map(({ label, link, className, ref, tab, icon }, key) => (
+          <a
+            href={link}
+            key={key}
+            ref={ref}
+            onClick={(e) => activeCurrentLink(e, tab)}
+            aria-label={label}
+            className={`
+              group relative w-24 flex flex-col items-center px-2 py-3
+              outline outline-1 outline-[#28282B] rounded-md
+              first:rounded-tl-lg first:rounded-bl-lg
+              last:rounded-tr-lg last:rounded-br-lg
+              z-10 bg-transparent
+              ${className?.includes('active')
+                ? 'bg-[#282a2b] text-white'
+                : 'text-[#28282B] hover:text-white'
+              }
+            `}
+          >
+            {/* larger square icon container for a desktop-icon feel */}
+            <div className="w-16 h-16 p-2 bg-white/5 rounded-md shadow-sm flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+              <img src={`/images/icons/${icon}`} alt={label} className="w-full h-full object-contain" />
+            </div>
 
+            {/* visible label beneath icon */}
+            <span className="text-xs mt-2 text-center break-words">{label}</span>
+          </a>
+        ))}
+      </div>
+ 
 
-      {/* Active box sits behind links, tracks the current active link */}
-      <div
-        ref={activeBox}
-        className="absolute rounded-sm z-0"
-      />
-    </nav>
-  );
+       {/* Active box sits behind links, tracks the current active link */}
+       <div
+         ref={activeBox}
+         className="absolute rounded-sm z-0"
+       />
+     </nav>
+   );
 }
 
 Navbar.propTypes = {
