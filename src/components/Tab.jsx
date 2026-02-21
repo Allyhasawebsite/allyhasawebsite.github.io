@@ -1,6 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 
-const Tab = () => {
+const tabContent = {
+    home:        <p>Home content here</p>,
+    about:       <p>About content here</p>,
+    work:        <p>Work content here</p>,
+    photography: <p>Photography content here</p>,
+    contact:     <p>Contact content here</p>,
+};
+
+const Tab = ({ activeTab, activeTabs, setActiveTabs }) => {
+
+
+
     const footerRef = useRef(null);
     const headerRef = useRef(null);
 
@@ -78,21 +89,18 @@ const Tab = () => {
 
     return (
 
-        <div
-            ref={footerRef}
-            id="mydiv"
-            className="absolute left-1/2 rounded-lg -translate-x-1/2 w-40 bg-sky-400 cursor-move p-2"
-            style={{ top: "calc(100vh - 100px)" }} // adjust height offset
-        >
+        <div ref={footerRef} id="mydiv" className="absolute left-1/2 rounded-lg -translate-x-1/2 w-40 bg-sky-400 cursor-move p-2" style={{ top: "calc(100vh - 100px)" }}>
 
-        <div ref={headerRef} 
-                id="mydivheader"
-                className="bg-sky-600 text-white p-1 cursor-move" >
-            Footer 
+            <div ref={headerRef} id="mydivheader" className="bg-sky-600 text-white p-1 cursor-move flex justify-between">
+                <span>{activeTab}</span>
+                
+                <button onMouseDown={(e) => e.stopPropagation()} onClick={() => setActiveTabs(prev => prev.filter(t => t !== activeTab))}>
+                    ✕
+                </button>
 
-        </div>
+            </div>
 
-        <p> Testing </p>
+            <div>{tabContent[activeTab]}</div>
 
         </div>
 
