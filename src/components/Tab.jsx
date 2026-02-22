@@ -8,9 +8,7 @@ const tabContent = {
     contact:     <p>Contact content here</p>,
 };
 
-const Tab = ({ activeTab, activeTabs, setActiveTabs }) => {
-
-
+const Tab = ({ activeTab, setActiveTabs }) => {
 
     const footerRef = useRef(null);
     const headerRef = useRef(null);

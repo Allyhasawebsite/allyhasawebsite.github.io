@@ -5,7 +5,6 @@ const Footer = () => {
   
   return (
       <div>
-        <Tab> </Tab>
 
       </div>
   );

@@ -43,7 +43,6 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       label: 'About Me',
       link: '#about',
       className: 'nav-link',
-      // icon file name inside public/images/icons
       icon: 'about.png',
       tab: 'about'
     },
