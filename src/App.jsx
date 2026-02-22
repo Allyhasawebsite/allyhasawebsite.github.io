@@ -14,6 +14,8 @@ const App = () => {
   return (
     <div className="">
 
+      <Footer />
+
       {/* Background Video */}
       <div className="">
         <video
@@ -38,7 +40,7 @@ const App = () => {
         <Tab key={tab} activeTab={tab} activeTabs={activeTabs} setActiveTabs={setActiveTabs} />
       ))}
 
-      <Footer />
+      
 
     </div>
   )
