@@ -5,16 +5,22 @@ import { useState } from 'react'
 
 /** Components */
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Scroller from "./components/Scroller";
 import Tab from "./components/Tab";
 
 const App = () => {
   const [activeTabs, setActiveTabs] = useState([]);
 
   return (
-    <div className="">
-
-      <Footer />
+    <>
+      
+      {/* ensure scroller is fixed at the top and above the background */}
+      <div className="fixed top-0 left-0 w-full z-30">
+        <Scroller />
+      </div>
+      
+      {/* optionally add a spacer so page content doesn't sit under the fixed scroller:
+          <div className="h-16" />  -- adjust to the scroller's height if needed */}
 
       {/* Background Video */}
       <div className="">
@@ -29,20 +35,14 @@ const App = () => {
         </video>
       </div>
 
-
       <Header setActiveTabs={setActiveTabs} activeTabs={activeTabs} />
-
-      <main className="text-black">
-        App.jsx
-      </main>
 
       {activeTabs.map(tab => (
         <Tab key={tab} activeTab={tab} activeTabs={activeTabs} setActiveTabs={setActiveTabs} />
       ))}
 
-      
 
-    </div>
+    </>
   )
 }
 

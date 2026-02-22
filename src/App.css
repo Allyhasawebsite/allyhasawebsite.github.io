@@ -10,16 +10,27 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
   position: relative;
   z-index: 0;
 }
 
-
 body {
   min-height: 100vh;
   background: linear-gradient(to bottom, #ffffff, #e0fffe);
+}
+
+/* reset default body margin & use border-box sizing so elements can sit at the top */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0; 
 }
 
 @media (prefers-reduced-motion: no-preference) {
