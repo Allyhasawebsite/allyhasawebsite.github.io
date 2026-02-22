@@ -18,6 +18,11 @@
   --color-blue: #41bde6;
 }
 
+body {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ffffff, #e0fffe);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
