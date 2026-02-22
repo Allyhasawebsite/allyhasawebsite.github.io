@@ -16,6 +16,8 @@
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 
+  --animate-infinite-scroll: infinite-scroll 10s linear infinite;
+
 }
 
 @layer utilities {
@@ -23,6 +25,16 @@
     font-family: 'Inter', sans-serif;
   }
 } 
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 20px));
+  }
+
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
