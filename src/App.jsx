@@ -12,7 +12,7 @@ const App = () => {
   const [activeTabs, setActiveTabs] = useState([]);
 
   return (
-    <>
+    <div className="">
       <Header setActiveTabs={setActiveTabs} activeTabs={activeTabs} />
 
       <main>
@@ -25,7 +25,7 @@ const App = () => {
 
       <Footer />
 
-    </>
+    </div>
   )
 }
 

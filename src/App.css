@@ -1,10 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-white: #ffffff;
+  --color-brand-gray: #8b8b8b;
+  --color-brand-light: #e0fffe;
+  --color-brand-blue: #41bde6;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  --color-white: #ffffff;
+  --color-gray: #8b8b8b;
+  --color-light-blue: #e0fffe;
+  --color-blue: #41bde6;
 }
 
 .logo {
