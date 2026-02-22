@@ -13,9 +13,24 @@ const App = () => {
 
   return (
     <div className="">
+
+      {/* Background Video */}
+      <div className="">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-15"
+        >
+          <source src="/public/background/logo.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+
       <Header setActiveTabs={setActiveTabs} activeTabs={activeTabs} />
 
-      <main>
+      <main className="text-black">
         App.jsx
       </main>
 

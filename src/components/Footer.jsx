@@ -1,6 +1,4 @@
 
-import Tab from "./Tab";
-
 const Footer = () => {
   
   return (
