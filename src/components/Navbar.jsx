@@ -15,26 +15,26 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
     activeBox.current.style.height = lastActiveLink.current.offsetHeight + 'px';
   }
 
-  // replace separate useEffect + global listener with a single effect + cleanup
+  // useEffect
   useEffect(() => {
     initActiveBox();
     window.addEventListener('resize', initActiveBox);
     return () => window.removeEventListener('resize', initActiveBox);
   }, []);
 
-  // use currentTarget so clicks on the <img> still target the anchor
+  // click active current link
   const activeCurrentLink = (event, tab) => {
-    const target = event.currentTarget;
+    event.preventDefault();
+    
     lastActiveLink.current?.classList.remove('active');
-    target.classList.add('active');
-    lastActiveLink.current = target;
+    event.target.classList.add('active');
+    lastActiveLink.current = event.target;
 
-    activeBox.current.style.top = target.offsetTop + 'px';
-    activeBox.current.style.left = target.offsetLeft + 'px';
-    activeBox.current.style.width = target.offsetWidth + 'px';
-    activeBox.current.style.height = target.offsetHeight + 'px';
+    activeBox.current.style.top = event.target.offsetTop + 'px';
+    activeBox.current.style.left = event.target.offsetLeft + 'px';
+    activeBox.current.style.width = event.target.offsetWidth + 'px';
+    activeBox.current.style.height = event.target.offsetHeight + 'px';
 
-    // only add if not already open
     setActiveTabs(prev => prev.includes(tab) ? prev : [...prev, tab]);
   }
 
