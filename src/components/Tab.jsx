@@ -87,19 +87,37 @@ const Tab = ({ activeTab, setActiveTabs }) => {
 
     return (
 
-        <div ref={footerRef} id="mydiv" className="absolute left-1/2 rounded-lg -translate-x-1/2 w-40 bg-sky-400 cursor-move p-2">
-
-            <div ref={headerRef} id="mydivheader" className="bg-sky-600 text-white p-1 cursor-move flex justify-between">
-                <span>{activeTab}</span>
-                
-                <button onMouseDown={(e) => e.stopPropagation()} onClick={() => setActiveTabs(prev => prev.filter(t => t !== activeTab))}>
-                    ✕
-                </button>
-
+        <div
+          ref={footerRef}
+          id="mydiv"
+          className="fixed left-1/2 -translate-x-1/2 w-72 bg-white/95 rounded-xl shadow-lg border border-gray-200 cursor-default"
+          style={{ top: "calc(100vh - 400px)" }}
+        >
+          {/* protruding small tab (upper-left) — this is the drag handle */}
+          <div className="relative">
+            <div
+              ref={headerRef}
+              id="mydivheader"
+              className="absolute -top-3 left-4 w-36 h-8 bg-gray-100 rounded-t-md rounded-b-md shadow-sm flex items-center justify-between px-3 cursor-move select-none"
+            >
+              <span className="text-sm font-medium text-gray-800 truncate">{activeTab}</span>
+              <button
+                onMouseDown={(e) => e.stopPropagation()}
+                onClick={() => setActiveTabs(prev => prev.filter(t => t !== activeTab))}
+                className="text-gray-600 hover:text-gray-800 ml-2"
+                aria-label={`Close ${activeTab}`}
+              >
+                ✕
+              </button>
             </div>
 
-            <div>{tabContent[activeTab]}</div>
-
+            {/* main panel body */}
+            <div className="pt-6 pb-4 px-4 rounded-xl">
+              <div className="min-h-[80px]">
+                {tabContent[activeTab]}
+              </div>
+            </div>
+          </div>
         </div>
 
     );

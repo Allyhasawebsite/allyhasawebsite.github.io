@@ -19,8 +19,6 @@ const App = () => {
         <Scroller />
       </div>
       
-      {/* optionally add a spacer so page content doesn't sit under the fixed scroller:
-          <div className="h-16" />  -- adjust to the scroller's height if needed */}
 
       {/* Background Video */}
       <div className="">
