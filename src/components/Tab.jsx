@@ -1,126 +1,143 @@
-import React, { useRef, useEffect } from 'react';
-
-const tabContent = {
-    home:        <p>Home content here</p>,
-    about:       <p>About content here</p>,
-    work:        <p>Work content here</p>,
-    photography: <p>Photography content here</p>,
-    contact:     <p>Contact content here</p>,
-};
+import React, { useRef, useEffect } from "react";
 
 const Tab = ({ activeTab, setActiveTabs }) => {
+  const folderRef = useRef(null);
+  const tabHandleRef = useRef(null);
 
-    const footerRef = useRef(null);
-    const headerRef = useRef(null);
+  useEffect(() => {
+    const elmnt = folderRef.current;
+    const handle = tabHandleRef.current;
+    if (!elmnt) return;
 
-    useEffect(() => {
-        const elmnt = footerRef.current;
-        const header = headerRef.current;
-        if (!elmnt) return;
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-        let pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
+    const dragMouseDown = (e) => {
+      e.preventDefault();
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    };
 
-        const dragMouseDown = (e) => {
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+    const elementDrag = (e) => {
+      e.preventDefault();
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
 
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-        };
+      let newTop = elmnt.offsetTop - pos2;
+      let newLeft = elmnt.offsetLeft - pos1;
 
-        const elementDrag = (e) => {
-            e.preventDefault();
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
+      const rect = elmnt.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
 
-            // calculate new positions
-            let newTop = elmnt.offsetTop - pos2;
-            let newLeft = elmnt.offsetLeft - pos1;
+      if (newTop < 0) newTop = 0;
+      if (newLeft < 0) newLeft = 0;
+      if (newTop + rect.height > vh) newTop = vh - rect.height;
+      if (newLeft + rect.width > vw) newLeft = vw - rect.width;
 
-            // get element dimensions
-            const rect = elmnt.getBoundingClientRect();
-            const elWidth = rect.width;
-            const elHeight = rect.height;
+      elmnt.style.top = newTop + "px";
+      elmnt.style.left = newLeft + "px";
+    };
 
-            // get viewport dimensions
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
+    const closeDragElement = () => {
+      document.onmouseup = null;
+      document.onmousemove = null;
+    };
 
-            // clamp values so the element stays in viewport
-            if (newTop < 0) newTop = 0;
-            if (newLeft < 0) newLeft = 0;
-            if (newTop + elHeight > vh) newTop = vh - elHeight;
-            if (newLeft + elWidth > vw) newLeft = vw - elWidth;
+    if (handle) handle.onmousedown = dragMouseDown;
+    else elmnt.onmousedown = dragMouseDown;
 
-            // apply
-            elmnt.style.top = newTop + "px";
-            elmnt.style.left = newLeft + "px";
-        };
+    return () => {
+      if (handle) handle.onmousedown = null;
+      else elmnt.onmousedown = null;
+    };
+  }, []);
 
-
-        const closeDragElement = () => {
-        document.onmouseup = null;
-        document.onmousemove = null;
-        };
-
-        // attach to header if it exists
-        if (header) {
-        header.onmousedown = dragMouseDown;
-        } else {
-        elmnt.onmousedown = dragMouseDown;
-        }
-
-        return () => {
-        if (header) {
-            header.onmousedown = null;
-        } else {
-            elmnt.onmousedown = null;
-        }
-        };
-    }, []);
-
-    return (
-
+  return (
+    <div
+      ref={folderRef}
+      className="fixed select-none"
+      style={{
+        top: "calc(100vh - 420px)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "320px",
+        filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.15))",
+        zIndex: 50,
+      }}
+    >
+      {/* Folder tab label — brand-gray, raised top-left */}
+      <div style={{ display: "flex", alignItems: "flex-end" }}>
         <div
-          ref={footerRef}
-          id="mydiv"
-          className="fixed left-1/2 -translate-x-1/2 w-72 bg-white/95 rounded-xl shadow-lg border border-gray-200 cursor-default"
-          style={{ top: "calc(100vh - 400px)" }}
+          ref={tabHandleRef}
+          className="cursor-move flex items-center justify-between"
+          style={{
+            width: "120px",
+            height: "26px",
+            backgroundColor: "#8b8b8b",
+            borderRadius: "6px 10px 0 0",
+            clipPath: "polygon(0 100%, 0 20%, 6% 0, 88% 0, 100% 100%)",
+            paddingLeft: "12px",
+            paddingRight: "10px",
+          }}
         >
-          {/* protruding small tab (upper-left) — this is the drag handle */}
-          <div className="relative">
-            <div
-              ref={headerRef}
-              id="mydivheader"
-              className="absolute -top-3 left-4 w-36 h-8 bg-gray-100 rounded-t-md rounded-b-md shadow-sm flex items-center justify-between px-3 cursor-move select-none"
-            >
-              <span className="text-sm font-medium text-gray-800 truncate">{activeTab}</span>
-              <button
-                onMouseDown={(e) => e.stopPropagation()}
-                onClick={() => setActiveTabs(prev => prev.filter(t => t !== activeTab))}
-                className="text-gray-600 hover:text-gray-800 ml-2"
-                aria-label={`Close ${activeTab}`}
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* main panel body */}
-            <div className="pt-6 pb-4 px-4 rounded-xl">
-              <div className="min-h-[80px]">
-                {tabContent[activeTab]}
-              </div>
-            </div>
-          </div>
+          <span
+            className="font-mono font-semibold truncate"
+            style={{
+              fontSize: "11px",
+              color: "#e0fffe",
+              textTransform: "capitalize",
+              letterSpacing: "0.04em",
+              maxWidth: "75px",
+            }}
+          >
+            {activeTab}
+          </span>
+          <button
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={() => setActiveTabs((prev) => prev.filter((t) => t !== activeTab))}
+            style={{ color: "#e0fffe", fontSize: "10px", marginLeft: "4px", lineHeight: 1 }}
+          >
+            ✕
+          </button>
         </div>
+      </div>
 
-    );
+      {/* Folder body — gray frame with brand-light interior */}
+      <div
+        style={{
+          backgroundColor: "#8b8b8b",
+          borderRadius: "0 8px 8px 8px",
+          padding: "3px",
+        }}
+      >
+        {/* Inner content area */}
+        <div
+          style={{
+            backgroundColor: "#e0fffe",
+            borderRadius: "0 6px 6px 6px",
+            minHeight: "200px",
+            padding: "20px",
+          }}
+        >
+          <p
+            className="font-mono"
+            style={{
+              color: "#8b8b8b",
+              fontSize: "13px",
+              textTransform: "capitalize",
+              letterSpacing: "0.03em",
+            }}
+          >
+            portfolio pieces go here
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Tab;
