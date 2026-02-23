@@ -1,8 +1,21 @@
 import React, { useRef, useEffect } from "react";
 
+import AboutTab from "./tabs/AboutTab";
+import DesignTab from "./tabs/DesignTab";
+import ThreeDTab from "./tabs/ThreeDTab";
+import ProjectionTab from "./tabs/ProjectionTab";
+
+
 const Tab = ({ activeTab, setActiveTabs }) => {
   const folderRef = useRef(null);
   const tabHandleRef = useRef(null);
+
+  const tabContent = {
+        about:       <AboutTab />,
+        design:      <DesignTab />,
+        threeD:        <ThreeDTab />,
+        projmapping: <ProjectionTab />,
+    };
 
   useEffect(() => {
     const elmnt = folderRef.current;
@@ -127,17 +140,19 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             padding: "20px",
           }}
         >
-          <p
-            className="font-mono"
+
+          <div
             style={{
-              color: "#8b8b8b",
-              fontSize: "13px",
-              textTransform: "capitalize",
-              letterSpacing: "0.03em",
+                backgroundColor: "#e0fffe",
+                borderRadius: "0 6px 6px 6px",
+                minHeight: "200px",
+                overflowY: "auto", // For Vertical Scrolling
+                padding: "20px",
             }}
-          >
-            Testing
-          </p>
+            >
+                {tabContent[activeTab]}
+            </div>
+
         </div>
       </div>
     </div>
