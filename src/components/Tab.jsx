@@ -69,7 +69,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
         zIndex: 50,
       }}
     >
-      {/* Folder tab label — brand-gray, raised top-left */}
+      {/* Folder tab label */}
       <div style={{ display: "flex", alignItems: "flex-end" }}>
         <div
           ref={tabHandleRef}
@@ -84,6 +84,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             paddingRight: "10px",
           }}
         >
+
           <span
             className="font-mono font-semibold truncate"
             style={{
@@ -96,6 +97,8 @@ const Tab = ({ activeTab, setActiveTabs }) => {
           >
             {activeTab}
           </span>
+
+
           <button
             onMouseDown={(e) => e.stopPropagation()}
             onClick={() => setActiveTabs((prev) => prev.filter((t) => t !== activeTab))}
@@ -103,10 +106,11 @@ const Tab = ({ activeTab, setActiveTabs }) => {
           >
             ✕
           </button>
+
         </div>
       </div>
 
-      {/* Folder body — gray frame with brand-light interior */}
+      {/* Folder body */}
       <div
         style={{
           backgroundColor: "#8b8b8b",
@@ -132,7 +136,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
               letterSpacing: "0.03em",
             }}
           >
-            portfolio pieces go here
+            Testing
           </p>
         </div>
       </div>
