@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import AboutTab from "./tabs/AboutTab";
 import DesignTab from "./tabs/DesignTab";
@@ -9,6 +9,7 @@ import ProjectionTab from "./tabs/ProjectionTab";
 const Tab = ({ activeTab, setActiveTabs }) => {
   const folderRef = useRef(null);
   const tabHandleRef = useRef(null);
+  const [pos, setPos] = useState({ top: null, left: null });
 
   const tabContent = {
         about:       <AboutTab />,
@@ -16,6 +17,14 @@ const Tab = ({ activeTab, setActiveTabs }) => {
         threeD:        <ThreeDTab />,
         projmapping: <ProjectionTab />,
     };
+
+    const tabConfig = {
+        about:       { width: "320px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+        design:      { width: "520px", top: "calc(100vh - 520px)", maxHeight: "400px" },
+        threeD:      { width: "320px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+        projmapping: { width: "520px", top: "calc(100vh - 420px)", maxHeight: "500px" },
+    };
+
 
   useEffect(() => {
     const elmnt = folderRef.current;
@@ -25,35 +34,43 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
     const dragMouseDown = (e) => {
-      e.preventDefault();
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // capture current real position on drag start
+        const rect = elmnt.getBoundingClientRect();
+        elmnt.style.left = rect.left + "px";
+        elmnt.style.top = rect.top + "px";
+        elmnt.style.transform = "none";
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
     };
 
     const elementDrag = (e) => {
-      e.preventDefault();
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
 
-      let newTop = elmnt.offsetTop - pos2;
-      let newLeft = elmnt.offsetLeft - pos1;
+        let newTop = elmnt.offsetTop - pos2;
+        let newLeft = elmnt.offsetLeft - pos1;
 
-      const rect = elmnt.getBoundingClientRect();
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+        const elWidth = elmnt.offsetWidth;
+        const elHeight = elmnt.offsetHeight;
 
-      if (newTop < 0) newTop = 0;
-      if (newLeft < 0) newLeft = 0;
-      if (newTop + rect.height > vh) newTop = vh - rect.height;
-      if (newLeft + rect.width > vw) newLeft = vw - rect.width;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
 
-      elmnt.style.top = newTop + "px";
-      elmnt.style.left = newLeft + "px";
-    };
+        // clamp to full viewport
+        if (newTop < 0) newTop = 0;
+        if (newLeft < 0) newLeft = 0;
+        if (newTop + elHeight > vh) newTop = vh - elHeight;
+        if (newLeft + elWidth > vw) newLeft = vw - elWidth;
+
+        elmnt.style.top = newTop + "px";
+        elmnt.style.left = newLeft + "px";
+        };
 
     const closeDragElement = () => {
       document.onmouseup = null;
@@ -74,10 +91,10 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       ref={folderRef}
       className="fixed select-none"
       style={{
-        top: "calc(100vh - 420px)",
+        top: tabConfig[activeTab]?.top ?? "calc(100vh - 420px)",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "320px",
+        width: tabConfig[activeTab]?.width ?? "320px",
         filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.15))",
         zIndex: 50,
       }}
@@ -146,7 +163,8 @@ const Tab = ({ activeTab, setActiveTabs }) => {
                 backgroundColor: "#e0fffe",
                 borderRadius: "0 6px 6px 6px",
                 minHeight: "200px",
-                overflowY: "auto", // For Vertical Scrolling
+                maxHeight: tabConfig[activeTab]?.maxHeight ?? "400px",
+                overflowY: "auto",
                 padding: "20px",
             }}
             >

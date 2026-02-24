@@ -1,6 +1,6 @@
 const headerContent = [
   { message: "✧✧ welcome to ally's motion media website where you can find some fun stuff :) ✧✧" },
-  { message: "✧ this website was made by Ally's brother - Aronn ✧"}
+  { message: "✧ this website was made by aronn laurel (˵ •̀ ᴗ - ˵ ) ✧"}
 ]
 
 const Scroller = () => {
@@ -9,6 +9,7 @@ const Scroller = () => {
 
   return (
     <div className="w-full overflow-hidden bg-brand-light py-1 mt-[3%]">
+
       <div className="flex w-max animate-infinite-scroll">
 
         {items.map((item, i) => (
@@ -18,6 +19,7 @@ const Scroller = () => {
         ))}
 
       </div>
+      
     </div>
   );
 };
