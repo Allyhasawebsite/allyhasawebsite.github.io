@@ -18,6 +18,15 @@
 body {
   min-height: 100vh;
   background: linear-gradient(to bottom, #ffffff, #e0fffe);
+  cursor: url('/images/icons/cursor.png') 0 0, auto;
+}
+
+a, button {
+  cursor: url('/images/icons/click.png') 0 0, auto;
+}
+
+.drag-handle {
+  cursor: url("/images/icons/drag.png") 0 0, auto;
 }
 
 /* reset default body margin & use border-box sizing so elements can sit at the top */

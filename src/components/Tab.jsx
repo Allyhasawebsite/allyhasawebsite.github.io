@@ -100,10 +100,10 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       }}
     >
       {/* Folder tab label */}
-      <div style={{ display: "flex", alignItems: "flex-end" }}>
+      <div className="flex items-end" style={{ display: "flex", alignItems: "flex-end" }}>
         <div
           ref={tabHandleRef}
-          className="cursor-move flex items-center justify-between"
+          className="cursor-move flex items-center justify-between drag-handle"
           style={{
             width: "120px",
             height: "26px",
