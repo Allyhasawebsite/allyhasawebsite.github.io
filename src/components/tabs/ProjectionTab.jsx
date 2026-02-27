@@ -8,7 +8,7 @@ const ProjectionTab = () => {
         <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
             
             <iframe
-            src="https://player.vimeo.com/video/760480369?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            src="https://player.vimeo.com/video/1117850278?h=62682ba35f"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
@@ -16,21 +16,46 @@ const ProjectionTab = () => {
             />
 
         </div>
-        
+
+        {/* Divider rows */}
+        <div className="flex flex-col">
+          <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
+            {"=".repeat(70)}
+          </p>
+          <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
+            {"=".repeat(70)}
+          </p>
+          <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
+            {"=".repeat(70)}
+          </p>
+        </div>
+
+        {/* Projection section */}
+        <div className="flex gap-6">
+
+          {/* Left label */}
+          <span className="font-bold text-xl whitespace-nowrap"> Projection <br/> Mapping </span>
+
+          {/* Right content */}
+          <div className="flex flex-col gap-4 text-left">
+
+            <p className="leading-relaxed">
+              A modernized display of ancient Chinese armory and calligraphy..
+            </p>
+
+            <p className="leading-relaxed">
+              Modelled and animated in 3D, the armory design is referenced from ancient Chinese designs. While the typography is written by hand on Procreate to give a more natural feel.
+            </p>
+
+            <p className="leading-relaxed">
+              This was also a chance for me to explore forming my own music with Launchpad on iPad.
+            </p>
+
+          </div>
+
+        </div>
         
 
-        {/* Video 2 */}
-        <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
-            
-            <iframe
-            src="https://player.vimeo.com/video/1117850278?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-            title="Mazz! An Unscripted Series title sequence"
-            />
-            
-        </div>
 
 
 
