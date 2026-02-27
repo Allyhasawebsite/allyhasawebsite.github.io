@@ -31,7 +31,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
 
   const tabConfig = {
     about:       { width: "520px", top: "calc(100vh - 420px)", maxHeight: "400px" },
-    design:      { width: "720px", top: "calc(100vh - 520px)", maxHeight: "400px" },
+    design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "500px" },
     threeD:      { width: "320px", top: "calc(100vh - 420px)", maxHeight: "400px" },
     projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
   };
