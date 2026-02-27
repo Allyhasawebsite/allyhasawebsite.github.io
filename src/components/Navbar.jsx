@@ -26,16 +26,46 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
   const activeCurrentLink = (event, tab) => {
     event.preventDefault();
     
+    // ensure anchor is used even when children are clicked
+    const target = event.currentTarget;
+    
     lastActiveLink.current?.classList.remove('active');
-    event.target.classList.add('active');
-    lastActiveLink.current = event.target;
+    target.classList.add('active');
+    lastActiveLink.current = target;
 
-    activeBox.current.style.top = event.target.offsetTop + 'px';
-    activeBox.current.style.left = event.target.offsetLeft + 'px';
-    activeBox.current.style.width = event.target.offsetWidth + 'px';
-    activeBox.current.style.height = event.target.offsetHeight + 'px';
+    if (activeBox.current) {
+      activeBox.current.style.top = target.offsetTop + 'px';
+      activeBox.current.style.left = target.offsetLeft + 'px';
+      activeBox.current.style.width = target.offsetWidth + 'px';
+      activeBox.current.style.height = target.offsetHeight + 'px';
+    }
 
-    setActiveTabs(prev => prev.includes(tab) ? prev : [...prev, tab]);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    if (isMobile) {
+      // single-tab behavior on mobile: if already open, close then reopen to reset
+      if (activeTabs.includes(tab)) {
+        setActiveTabs([]);
+        setTimeout(() => setActiveTabs([tab]), 50);
+      } else {
+        setActiveTabs([tab]);
+      }
+    } else {
+      // desktop: allow multiple tabs; if already open, remove then re-add to "reopen" it
+      if (activeTabs.includes(tab)) {
+        // remove immediately, then re-add shortly after to remount
+        setActiveTabs(prev => prev.filter(t => t !== tab));
+        setTimeout(() => {
+          setActiveTabs(prev => {
+            // ensure not duplicated
+            if (prev.includes(tab)) return prev;
+            return [...prev, tab];
+          });
+        }, 50);
+      } else {
+        setActiveTabs(prev => [...prev, tab]);
+      }
+    }
   }
 
   const navItems = [
