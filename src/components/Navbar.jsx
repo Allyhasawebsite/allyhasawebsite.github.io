@@ -58,7 +58,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       label: 'Projection Mapping',
       link: '#projectionmapping',
       className: 'nav-link',
-      icon: 'projection.png',
+      icon: 'proj.png',
       tab: 'projmapping'
     },
     {
@@ -74,6 +74,13 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       className: 'nav-link',
       icon: 'resume.png',
       tab: 'resume'
+    },
+    {
+      label: 'Playground',
+      link: '#playground',
+      className: 'nav-link',
+      icon: 'playground.png',
+      tab: 'playground'
     },
     
   ];
@@ -105,9 +112,19 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
             `}
           >
             {/* larger square icon container for a desktop-icon feel */}
-            <div className="w-16 h-16 p-2 bg-white/5 rounded-md shadow-sm flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
-              <img src={`/images/icons/${icon}`} alt={label} className="w-full h-full object-contain" />
+            <div className="w-20 h-20 p-2 bg-white/5 rounded-md flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+              
+              <img
+                src={`/images/icons/${icon}`}
+                alt={label}
+                className="w-full h-full object-contain"
+                onMouseEnter={e => e.currentTarget.src = `/images/icons/${icon.replace('.png', 'Hover.png')}`}
+                onMouseLeave={e => e.currentTarget.src = `/images/icons/${icon}`}
+              />
+              
             </div>
+
+            <span className="text-xs text-center leading-tight">{label}</span>
 
           </a>
         ))}
