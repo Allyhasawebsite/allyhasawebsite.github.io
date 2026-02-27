@@ -8,6 +8,9 @@ import ProjectionTab from "./tabs/ProjectionTab";
 const HEADER_HEIGHT = 48;
 const NAVBAR_HEIGHT = 80;
 
+// global ref to track max z-index used so tabs can layer on top of each other
+let maxZIndex = 50;
+
 const Tab = ({ activeTab, setActiveTabs }) => {
   const folderRef = useRef(null);
   const tabHandleRef = useRef(null);
@@ -43,6 +46,14 @@ const Tab = ({ activeTab, setActiveTabs }) => {
 
   const desktopConfig = tabConfig[activeTab] ?? tabConfig.about;
 
+  // bring this tab to front by incrementing z-index
+  const bringToFront = () => {
+    if (folderRef.current) {
+      maxZIndex += 1;
+      folderRef.current.style.zIndex = maxZIndex;
+    }
+  };
+
   // Drag (desktop only)
   useEffect(() => {
     const elmnt = folderRef.current;
@@ -58,6 +69,9 @@ const Tab = ({ activeTab, setActiveTabs }) => {
         if (e.target.closest('button')) return; // 👈 don't capture if clicking the close button
 
         e.preventDefault();
+
+        // bring to front on drag start
+        bringToFront();
 
         const rect = elmnt.getBoundingClientRect();
         elmnt.style.transform = "none";
@@ -108,7 +122,11 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       handle.removeEventListener("pointercancel", onPointerUp);
     };
   }, [isMobile, activeTab]);
-  // ────────────────────────────────────────────────────────────────────────
+
+  // bring to front on mount so newly opened tabs appear on top
+  useEffect(() => {
+    bringToFront();
+  }, [activeTab]);
 
   const containerStyle = isMobile
     ? mobileStyle
