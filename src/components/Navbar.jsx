@@ -96,7 +96,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       link: '#3d',
       className: 'nav-link',
       icon: '3d.png',
-      tab: '3d'
+      tab: 'threeD'
     },
     {
       label: 'Resume',

@@ -12,7 +12,7 @@ const ProjectionTab = () => {
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-            title="Mazz! An Unscripted Series title sequence"
+            title="Caliza projection 2025"
             />
 
         </div>
@@ -25,6 +25,7 @@ const ProjectionTab = () => {
           <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
             {"=".repeat(70)}
           </p>
+
           <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
             {"=".repeat(70)}
           </p>

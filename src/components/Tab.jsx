@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 
 import AboutTab from "./tabs/AboutTab";
 import DesignTab from "./tabs/DesignTab";
-import ThreeDTab from "./tabs/ThreeDTab";
+import ThreeDTab from "./tabs/ThreeDTab.jsx";
 import ProjectionTab from "./tabs/ProjectionTab";
 
 const HEADER_HEIGHT = 48;
@@ -32,7 +32,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
   const tabConfig = {
     about:       { width: "520px", top: "calc(100vh - 420px)", maxHeight: "400px" },
     design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "500px" },
-    threeD:      { width: "320px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+    threeD:      { width: "700px", top: "calc(100vh - 420px)", maxHeight: "400px" },
     projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
   };
 
