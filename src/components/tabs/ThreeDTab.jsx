@@ -55,21 +55,20 @@ const ThreeDTab = () => {
       </div>
 
       {/* Divider */}
-      <div className="overflow-hidden whitespace-nowrap py-2 border-b border-[#28282B]/20">
+      <div className="overflow-hidden whitespace-nowrap py-2">
         {"=".repeat(120)}
       </div>
 
       {/* Description */}
       <div className="flex gap-4 pt-4 pb-1">
 
-        <div className="flex flex-col items-start gap-0 min-w-[60px]">
-          <span className="font-black text-lg leading-none">3D</span>
-          <span className="font-black text-lg leading-none opacity-30">Work</span>
+        <div className="flex flex-col text-right items-start gap-0 min-w-[60px]">
+          <span className="font-black text-lg leading-none">3D <br/> Works </span>
         </div>
 
         <div className="w-px bg-[#28282B]/20 self-stretch mx-1" />
 
-        <div className="flex flex-col gap-3 text-[#28282B]/80 leading-relaxed">
+        <div className="flex text-left flex-col gap-3 text-[#28282B]/80 leading-relaxed">
           <p>
             For a senior capstone film, I designed, modelled, and textured 3D backgrounds in Blender —
             achieving a 2D look on a fully 3D world.

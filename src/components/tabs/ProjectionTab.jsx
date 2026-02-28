@@ -22,26 +22,21 @@ const ProjectionTab = () => {
           <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
             {"=".repeat(70)}
           </p>
-          <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
-            {"=".repeat(70)}
-          </p>
-
-          <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
-            {"=".repeat(70)}
-          </p>
         </div>
 
         {/* Projection section */}
         <div className="flex gap-6">
 
           {/* Left label */}
-          <span className="font-bold text-xl whitespace-nowrap"> Projection <br/> Mapping </span>
+          <span className="font-bold text-right text-xl whitespace-nowrap"> Projection <br/> Mapping </span>
+
+          <div className="w-px bg-[#28282B]/20 self-stretch mx-1" />
 
           {/* Right content */}
           <div className="flex flex-col gap-4 text-left">
 
             <p className="leading-relaxed">
-              A modernized display of ancient Chinese armory and calligraphy..
+              A modernized display of ancient Chinese armory and calligraphy.
             </p>
 
             <p className="leading-relaxed">

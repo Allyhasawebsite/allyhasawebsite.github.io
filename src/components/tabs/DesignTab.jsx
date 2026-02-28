@@ -20,12 +20,6 @@ const DesignTab = () => {
         <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
           {"=".repeat(70)}
         </p>
-        <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
-          {"=".repeat(70)}
-        </p>
-        <p className="tracking-widest text-[#28282B] overflow-hidden whitespace-nowrap">
-          {"=".repeat(70)}
-        </p>
       </div>
 
       {/* Design section */}

@@ -145,7 +145,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
 
   const aboutSocials = [
     { label: "LinkedIn",  icon: "↗", href: "https://www.linkedin.com/in/allyanna-laurel-b38933170", action: "link" },
-    { label: "Instagram", icon: "↗", href: "https://www.instagram.com/allyanna_banana/",   action: "link" },
+    { label: "Instagram", icon: "↗", href: "https://www.instagram.com/allywantsmorestorage/",   action: "link" },
     { label: "Gmail",     icon: "⎘", value: "laurelallyanna@gmail.com",                  action: "copy" },
   ];
 
@@ -261,7 +261,10 @@ const Tab = ({ activeTab, setActiveTabs }) => {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#e0fffe]/70 text-[10px] tracking-wide hover:text-[#e0fffe] transition-colors duration-150"
+                        className="text-[12px] tracking-wide transition-colors duration-150"
+                        style={{ color: "#e0fffe", outline: "none" }}
+                        onMouseEnter={(e) => e.target.style.color = "rgba(224, 255, 254, 0.7)"}
+                        onMouseLeave={(e) => e.target.style.color = "#e0fffe"}
                       >
                         {label} {icon}
                       </a>
@@ -269,7 +272,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
                       <button
                         key={label}
                         style={{ outline: "none" }}
-                        className="text-[#e0fffe]/70 text-[10px] tracking-wide hover:text-[#e0fffe] transition-colors duration-150"
+                        className="text-[#e0fffe] text-[10px] tracking-wide hover:text-[#e0fffe]/70 transition-colors duration-150"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={() => navigator.clipboard.writeText(value)}
                       >

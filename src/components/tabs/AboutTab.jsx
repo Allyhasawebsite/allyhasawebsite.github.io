@@ -20,9 +20,9 @@ const AboutTab = () => {
       </div>
 
       {/* About Me */}
-      <div className="flex gap-4">
+      <div className="flex gap-7">
         <span className="font-bold whitespace-nowrap min-w-[64px]">About Me</span>
-        <div className="flex flex-col gap-3 text-[#28282B]/80">
+        <div className="flex flex-col text-left gap-3 text-[#28282B]/80">
           <p className="font-bold text-[#28282B]">Alright, let's do this one last time!</p>
           <p>
             My name is Allyanna Laurel and I'm a motion designer
