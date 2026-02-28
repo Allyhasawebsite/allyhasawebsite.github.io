@@ -29,8 +29,8 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     design:      <DesignTab />,
     threeD:      <ThreeDTab />,
     projmapping: <ProjectionTab />,
-    resume:     <ResumeTab />,
-    playground: <PlaygroundTab />,
+    resume:      <ResumeTab />,
+    playground:  <PlaygroundTab />,
   };
 
   const tabConfig = {
@@ -38,8 +38,8 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "500px" },
     threeD:      { width: "700px", top: "calc(100vh - 420px)", maxHeight: "400px" },
     projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
-    resume: { width: "520px", top: "calc(100vh - 420px)", maxHeight: "500px" },
-    playground: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
+    resume:      { width: "520px", top: "calc(100vh - 420px)", maxHeight: "500px" },
+    playground:  { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
   };
 
   const mobileStyle = {
@@ -66,28 +66,25 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     const handle = tabHandleRef.current;
     if (!elmnt || !handle || isMobile) return;
 
-    // How far inside the element the pointer landed on drag start
     let startX = 0;
     let startY = 0;
 
     const onPointerDown = (e) => {
-        if (e.button !== 0) return;
-        if (e.target.closest('button')) return; // 👈 don't capture if clicking the close button
+      if (e.button !== 0) return;
+      if (e.target.closest("button")) return;
 
-        e.preventDefault();
+      e.preventDefault();
+      bringToFront();
 
-        // bring to front on drag start
-        bringToFront();
+      const rect = elmnt.getBoundingClientRect();
+      elmnt.style.transform = "none";
+      elmnt.style.left = rect.left + "px";
+      elmnt.style.top  = rect.top  + "px";
 
-        const rect = elmnt.getBoundingClientRect();
-        elmnt.style.transform = "none";
-        elmnt.style.left = rect.left + "px";
-        elmnt.style.top  = rect.top  + "px";
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
 
-        startX = e.clientX - rect.left;
-        startY = e.clientY - rect.top;
-
-        handle.setPointerCapture(e.pointerId);
+      handle.setPointerCapture(e.pointerId);
     };
 
     const onPointerMove = (e) => {
@@ -102,7 +99,6 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       let newLeft = e.clientX - startX;
       let newTop  = e.clientY - startY;
 
-      // Clamp: stay inside safe area between header and navbar
       newLeft = Math.max(0, Math.min(newLeft, vw - elW));
       newTop  = Math.max(HEADER_HEIGHT, Math.min(newTop, vh - NAVBAR_HEIGHT - elH));
 
@@ -147,6 +143,12 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     ? `calc(100vh - ${HEADER_HEIGHT}px - ${NAVBAR_HEIGHT}px - 60px)`
     : (desktopConfig.maxHeight ?? "400px");
 
+  const aboutSocials = [
+    { label: "LinkedIn",  icon: "↗", href: "https://www.linkedin.com/in/allyanna-laurel-b38933170", action: "link" },
+    { label: "Instagram", icon: "↗", href: "https://www.instagram.com/allyanna_banana/",   action: "link" },
+    { label: "Gmail",     icon: "⎘", value: "laurelallyanna@gmail.com",                  action: "copy" },
+  ];
+
   return (
     <div
       ref={folderRef}
@@ -157,7 +159,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
         zIndex: 50,
       }}
     >
-      {/* Folder tab label */}
+      {/* Folder tab handle */}
       <div className="flex items-end">
         <div
           ref={tabHandleRef}
@@ -170,33 +172,38 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             clipPath: "polygon(0 100%, 0 20%, 6% 0, 88% 0, 100% 100%)",
             paddingLeft: "12px",
             paddingRight: "10px",
-            touchAction: "none", // required for pointer events to fire on touch devices
+            touchAction: "none",
           }}
         >
-            <span
-                className="font-mono font-semibold truncate"
-                style={{
-                fontSize: "11px",
-                color: "#e0fffe",
-                textTransform: "capitalize",
-                letterSpacing: "0.04em",
-                maxWidth: "75px",
-                }}
-            >
-                {activeTab}
-            </span>
+          <span
+            className="font-mono font-semibold truncate"
+            style={{
+              fontSize: "11px",
+              color: "#e0fffe",
+              textTransform: "capitalize",
+              letterSpacing: "0.04em",
+              maxWidth: "75px",
+            }}
+          >
+            {activeTab}
+          </span>
 
-            <button
+          <button
             onPointerDown={(e) => e.stopPropagation()}
             onPointerUp={(e) => {
-                e.stopPropagation();
-                setActiveTabs((prev) => prev.filter((t) => t !== activeTab));
+              e.stopPropagation();
+              setActiveTabs((prev) => prev.filter((t) => t !== activeTab));
             }}
-            style={{ outline: "none", color: "#e0fffe", fontSize: "10px", marginLeft: "4px", lineHeight: 1 }}
-            >
-                ✕
-            </button>
-
+            style={{
+              outline: "none",
+              color: "#e0fffe",
+              fontSize: "10px",
+              marginLeft: "4px",
+              lineHeight: 1,
+            }}
+          >
+            ✕
+          </button>
         </div>
       </div>
 
@@ -213,8 +220,10 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             backgroundColor: "#e0fffe",
             borderRadius: isMobile ? "0 6px 0 0" : "0 6px 6px 6px",
             padding: "20px",
+            paddingBottom: activeTab === "about" ? "0px" : "20px",
           }}
         >
+          {/* Scrollable content */}
           <div
             style={{
               backgroundColor: "#e0fffe",
@@ -225,6 +234,58 @@ const Tab = ({ activeTab, setActiveTabs }) => {
           >
             {tabContent[activeTab]}
           </div>
+
+          {/* Status bar — About tab only */}
+          {activeTab === "about" && (
+            <div
+              className="flex items-center justify-between px-3"
+              style={{
+                height: "28px",
+                backgroundColor: "#8b8b8b",
+                borderRadius: "0 0 6px 6px",
+                marginLeft: "-20px",
+                marginRight: "-20px",
+              }}
+            >
+              <span className="text-[#e0fffe]/50 text-[10px] tracking-widest uppercase">
+                Find Me
+              </span>
+
+              <div className="flex items-center">
+                {aboutSocials.map(({ label, icon, href, value, action }, i, arr) => {
+                  const isLast = i === arr.length - 1;
+                  return [
+                    action === "link" ? (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#e0fffe]/70 text-[10px] tracking-wide hover:text-[#e0fffe] transition-colors duration-150"
+                      >
+                        {label} {icon}
+                      </a>
+                    ) : (
+                      <button
+                        key={label}
+                        style={{ outline: "none" }}
+                        className="text-[#e0fffe]/70 text-[10px] tracking-wide hover:text-[#e0fffe] transition-colors duration-150"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => navigator.clipboard.writeText(value)}
+                      >
+                        {label} {icon}
+                      </button>
+                    ),
+                    !isLast && (
+                      <span key={`d-${i}`} className="text-[#e0fffe]/20 text-[10px] px-1">
+                        |
+                      </span>
+                    ),
+                  ];
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
