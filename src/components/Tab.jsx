@@ -4,6 +4,7 @@ import AboutTab from "./tabs/AboutTab";
 import DesignTab from "./tabs/DesignTab";
 import ThreeDTab from "./tabs/ThreeDTab.jsx";
 import ProjectionTab from "./tabs/ProjectionTab";
+import ResumeTab from "./tabs/ResumeTab.jsx";
 
 const HEADER_HEIGHT = 48;
 const NAVBAR_HEIGHT = 80;
@@ -27,6 +28,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     design:      <DesignTab />,
     threeD:      <ThreeDTab />,
     projmapping: <ProjectionTab />,
+    resume:     <ResumeTab />,
   };
 
   const tabConfig = {
