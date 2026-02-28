@@ -1,11 +1,11 @@
 const photos = [
-  { src: "/images/playground/0 Cake.PNG", caption: "Caption here", location: "Manila, 2024" },
-  { src: "/images/playground/0 Toast.PNG", caption: "Caption here", location: "Tokyo, 2024" },
-  { src: "/images/playground/1 Aura.jpg", caption: "Caption here", location: "Seoul, 2023" },
-  { src: "/images/playground/1 goodVibes.jpg", caption: "Caption here", location: "LA, 2023" },
-  { src: "/images/playground/1 touchGrass.jpg", caption: "Caption here", location: "NYC, 2022" },
-  { src: "/images/playground/2 IMG_0727.jpg", caption: "Caption here", location: "Paris, 2022" },
-  { src: "/images/playground/2 IMG_0728.jpg", caption: "Caption here", location: "Paris, 2022" },
+  { src: "/images/playground/0 Cake.PNG", caption: "Caption here", location: "-, 2024" },
+  { src: "/images/playground/0 Toast.PNG", caption: "Caption here", location: "-, 2024" },
+  { src: "/images/playground/1 Aura.jpg", caption: "Caption here", location: "-, 2024" },
+  { src: "/images/playground/1 goodVibes.jpg", caption: "Caption here", location: "-, 2025" },
+  { src: "/images/playground/1 touchGrass.jpg", caption: "Caption here", location: "-, 2025" },
+  { src: "/images/playground/2 IMG_0727.jpg", caption: "Caption here", location: "-, 2025" },
+  { src: "/images/playground/2 IMG_0728.jpg", caption: "Caption here", location: "-, 2025" },
 ];
 
 const PhotoCard = ({ src, caption, location }) => {
