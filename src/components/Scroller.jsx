@@ -1,6 +1,6 @@
 const headerContent = [
-  { message: "✧✧ welcome to ally's motion media website where you can find some fun stuff :) ✧✧" },
-  { message: "✧ this website was made by aronn laurel (˵ •̀ ᴗ - ˵ ) ✧"}
+  { message: "✧✧ welcome to ally's motion media website where you can find some fun stuff ✧✧" },
+  { message: "✧ this website was made by aronn laurel ✧"}
 ]
 
 const Scroller = () => {
