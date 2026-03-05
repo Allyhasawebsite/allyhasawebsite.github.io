@@ -7,18 +7,20 @@ import { useState } from 'react'
 import Header from "./components/Header";
 import Scroller from "./components/Scroller";
 import Tab from "./components/Tab";
+import PageBorder from './components/Pageborder';
 
 const App = () => {
   const [activeTabs, setActiveTabs] = useState([]);
 
   return (
     <>
-      
-      {/* ensure scroller is fixed at the top and above the background */}
-      <div className="fixed top-0 left-0 w-full z-30">
+      {/* Page Border*/}
+      <PageBorder />
+
+      {/* Scroller */}
+      <div className="fixed top-0 left-0 w-full z-[10000]">
         <Scroller />
       </div>
-      
 
       {/* Background Video */}
       <div className="">
@@ -38,8 +40,6 @@ const App = () => {
       {activeTabs.map(tab => (
         <Tab key={tab} activeTab={tab} activeTabs={activeTabs} setActiveTabs={setActiveTabs} />
       ))}
-
-
     </>
   )
 }
