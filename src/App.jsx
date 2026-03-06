@@ -7,15 +7,12 @@ import { useState } from 'react'
 import Header from "./components/Header";
 import Scroller from "./components/Scroller";
 import Tab from "./components/Tab";
-import PageBorder from './components/Pageborder';
 
 const App = () => {
   const [activeTabs, setActiveTabs] = useState([]);
 
   return (
     <>
-      {/* Page Border*/}
-      <PageBorder />
 
       {/* Scroller */}
       <div className="fixed top-0 left-0 w-full z-[10000]">
