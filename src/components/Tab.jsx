@@ -143,7 +143,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       };
 
   const contentMaxHeight = isMobile
-    ? `calc(100vh - ${HEADER_HEIGHT}px - ${NAVBAR_HEIGHT}px - 60px)`
+    ? `calc(85vh - ${HEADER_HEIGHT}px - ${NAVBAR_HEIGHT}px - 60px)`
     : (desktopConfig.maxHeight ?? "400px");
 
   const aboutSocials = [
