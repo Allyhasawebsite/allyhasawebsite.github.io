@@ -1,13 +1,22 @@
 /* Node Modules */
-import { useRef, useEffect} from "react";
+import { useRef, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
+
+const MOBILE_PAGE_SIZE = 3;
 
 const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
   const lastActiveLink = useRef();
   const activeBox = useRef();
-  
+  const [mobileOffset, setMobileOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   const initActiveBox = () => {
-    // guard against missing refs
     if (!lastActiveLink.current || !activeBox.current) return;
     activeBox.current.style.top = lastActiveLink.current.offsetTop + 'px';
     activeBox.current.style.left = lastActiveLink.current.offsetLeft + 'px';
@@ -15,20 +24,16 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
     activeBox.current.style.height = lastActiveLink.current.offsetHeight + 'px';
   }
 
-  // useEffect
   useEffect(() => {
     initActiveBox();
     window.addEventListener('resize', initActiveBox);
     return () => window.removeEventListener('resize', initActiveBox);
   }, []);
 
-  // click active current link
   const activeCurrentLink = (event, tab) => {
     event.preventDefault();
-    
-    // ensure anchor is used even when children are clicked
     const target = event.currentTarget;
-    
+
     lastActiveLink.current?.classList.remove('active');
     target.classList.add('active');
     lastActiveLink.current = target;
@@ -40,10 +45,9 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       activeBox.current.style.height = target.offsetHeight + 'px';
     }
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const mobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-    if (isMobile) {
-      // single-tab behavior on mobile: if already open, close then reopen to reset
+    if (mobile) {
       if (activeTabs.includes(tab)) {
         setActiveTabs([]);
         setTimeout(() => setActiveTabs([tab]), 50);
@@ -51,13 +55,10 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
         setActiveTabs([tab]);
       }
     } else {
-      // desktop: allow multiple tabs; if already open, remove then re-add to "reopen" it
       if (activeTabs.includes(tab)) {
-        // remove immediately, then re-add shortly after to remount
         setActiveTabs(prev => prev.filter(t => t !== tab));
         setTimeout(() => {
           setActiveTabs(prev => {
-            // ensure not duplicated
             if (prev.includes(tab)) return prev;
             return [...prev, tab];
           });
@@ -69,112 +70,166 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
   }
 
   const navItems = [
-    {
-      label: 'About Me',
-      link: '#about',
-      className: 'nav-link',
-      icon: 'about.png',
-      tab: 'about'
-    },
-    {
-      label: 'Design',
-      link: '#design',
-      className: 'nav-link',
-      ref: lastActiveLink,
-      icon: 'design.png',
-      tab: 'design'
-    },
-    {
-      label: 'Projection Mapping',
-      link: '#projectionmapping',
-      className: 'nav-link',
-      icon: 'proj.png',
-      tab: 'projmapping'
-    },
-    {
-      label: '3D',
-      link: '#3d',
-      className: 'nav-link',
-      icon: '3d.png',
-      tab: 'threeD'
-    },
-    {
-      label: 'Demo',
-      link: '#demo',
-      className: 'nav-link',
-      icon: 'demo.png',
-      tab: 'demo'
-    },
-    {
-      label: 'Resume',
-      link: '#resume',
-      className: 'nav-link',
-      icon: 'resume.png',
-      tab: 'resume'
-    },
-    {
-      label: 'Playground',
-      link: '#playground',
-      className: 'nav-link',
-      icon: 'playground.png',
-      tab: 'playground'
-    },
-    
+    { label: 'About Me',           mobileLabel: 'About',      link: '#about',             className: 'nav-link', icon: 'about.png',      tab: 'about'       },
+    { label: 'Design',             mobileLabel: 'Design',     link: '#design',            className: 'nav-link', ref: lastActiveLink,    icon: 'design.png', tab: 'design'      },
+    { label: 'Projection Mapping', mobileLabel: 'Projection', link: '#projectionmapping', className: 'nav-link', icon: 'proj.png',       tab: 'projmapping' },
+    { label: '3D',                 mobileLabel: '3D',         link: '#3d',                className: 'nav-link', icon: '3d.png',         tab: 'threeD'      },
+    { label: 'Demo',               mobileLabel: 'Demo',       link: '#demo',              className: 'nav-link', icon: 'demo.png',       tab: 'demo'        },
+    { label: 'Resume',             mobileLabel: 'Resume',     link: '#resume',            className: 'nav-link', icon: 'resume.png',     tab: 'resume'      },
+    { label: 'Playground',         mobileLabel: 'Playground', link: '#playground',        className: 'nav-link', icon: 'playground.png', tab: 'playground'  },
   ];
 
+  const maxOffset = navItems.length - MOBILE_PAGE_SIZE;
+  const visibleItems = isMobile
+    ? navItems.slice(mobileOffset, mobileOffset + MOBILE_PAGE_SIZE)
+    : navItems;
+
+  const canGoLeft  = mobileOffset > 0;
+  const canGoRight = mobileOffset < maxOffset;
+
+  // Fixed dimensions so every item is identical
+  const ITEM_W = isMobile ? "80px"  : "96px";
+  const ITEM_H = isMobile ? "120px" : "140px";
+  const ICON_W = isMobile ? "56px"  : "80px";
+  const ICON_H = isMobile ? "56px"  : "80px";
+
   return (
-    <nav className={`
-      fixed bottom-3 left-1/2 -translate-x-1/2
-      flex justify-center font-mono z-50
-    `}>
+    // mb-6 = 24px bottom margin so nav doesn't hug the screen edge
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center font-mono z-50 mb-6">
 
-      <div className="flex gap-3 px-4">
-        {navItems.map(({ label, link, className, ref, tab, icon }, key) => (
-          <a
-            href={link}
-            key={key}
-            ref={ref}
-            onClick={(e) => activeCurrentLink(e, tab)}
-            aria-label={label}
-            className={`
-              group relative w-24 flex flex-col items-center px-2 py-3
-              rounded-md
-              first:rounded-tl-lg first:rounded-bl-lg
-              last:rounded-tr-lg last:rounded-br-lg
-              z-10 
-              ${className?.includes('active')
-                ? 'bg-[#282a2b] text-white'
-                : 'text-[#28282B] hover:text-white'
-              }
-            `}
+      <div className="flex items-center gap-3 px-4">
+
+        {/* LEFT ARROW - mobile only */}
+        {isMobile && (
+          <button
+            onClick={() => setMobileOffset(o => Math.max(0, o - 1))}
+            aria-label="Previous"
+            style={{
+              width: "28px",
+              height: "28px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "3px",
+              border: "1px solid",
+              borderColor: canGoLeft ? "#8b8b8b" : "#8b8b8b33",
+              backgroundColor: canGoLeft ? "#e0fffe" : "transparent",
+              color: canGoLeft ? "#28282B" : "#8b8b8b44",
+              fontFamily: "monospace",
+              fontSize: "13px",
+              flexShrink: 0,
+            }}
           >
-            {/* larger square icon container for a desktop-icon feel */}
-            <div className="w-20 h-20 p-2 bg-white/5 rounded-md flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
-              
-              <img
-                src={`/images/icons/${icon}`}
-                alt={label}
-                className="w-full h-full object-contain"
-                onMouseEnter={e => e.currentTarget.src = `/images/icons/${icon.replace('.png', 'Hover.png')}`}
-                onMouseLeave={e => e.currentTarget.src = `/images/icons/${icon}`}
-              />
-              
-            </div>
+            ←
+          </button>
+        )}
 
-            <span className="text-xs text-center leading-tight">{label}</span>
+        {/* NAV ITEMS — all same fixed width + height */}
+        {visibleItems.map((item) => {
+          const { label, mobileLabel, link, className, ref, tab, icon } = item;
+          return (
+            <a
+              href={link}
+              key={tab}
+              ref={ref}
+              onClick={(e) => activeCurrentLink(e, tab)}
+              aria-label={label}
+              className={`
+                group relative flex flex-col items-center justify-center
+                rounded-md z-10 gap-2
+                ${className?.includes('active')
+                  ? 'bg-[#282a2b] text-white'
+                  : 'text-[#28282B] hover:text-white'
+                }
+              `}
+              style={{ width: ITEM_W, height: ITEM_H, flexShrink: 0 }}
+            >
+              {/* Icon box — fixed size */}
+              <div
+                className="p-2 bg-white/5 rounded-md flex items-center justify-center transition-transform duration-150 group-hover:scale-105"
+                style={{ width: ICON_W, height: ICON_H, flexShrink: 0 }}
+              >
+                <img
+                  src={`/images/icons/${icon}`}
+                  alt={label}
+                  className="w-full h-full object-contain"
+                  onMouseEnter={e => e.currentTarget.src = `/images/icons/${icon.replace('.png', 'Hover.png')}`}
+                  onMouseLeave={e => e.currentTarget.src = `/images/icons/${icon}`}
+                />
+              </div>
 
-          </a>
-        ))}
+              {/* Label — fixed 2-line area so height never varies */}
+              <span
+                className="text-xs text-center leading-tight"
+                style={{ width: "100%", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              >
+                {isMobile && mobileLabel ? mobileLabel : label}
+              </span>
+            </a>
+          );
+        })}
+
+        {/* RIGHT ARROW - mobile only */}
+        {isMobile && (
+          <button
+            onClick={() => setMobileOffset(o => Math.min(maxOffset, o + 1))}
+            aria-label="Next"
+            style={{
+              width: "28px",
+              height: "28px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "3px",
+              border: "1px solid",
+              borderColor: canGoRight ? "#8b8b8b" : "#8b8b8b33",
+              backgroundColor: canGoRight ? "#e0fffe" : "transparent",
+              color: canGoRight ? "#28282B" : "#8b8b8b44",
+              fontFamily: "monospace",
+              fontSize: "13px",
+              flexShrink: 0,
+            }}
+          >
+            →
+          </button>
+        )}
+
       </div>
- 
 
-       {/* Active box sits behind links, tracks the current active link */}
-       <div
-         ref={activeBox}
-         className="absolute rounded-sm z-0"
-       />
-     </nav>
-   );
+      {/* Page indicator dots - mobile only */}
+      {isMobile && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-14px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: "4px",
+            alignItems: "center",
+          }}
+        >
+          {Array.from({ length: maxOffset + 1 }).map((_, i) => (
+            <div
+              key={i}
+              onClick={() => setMobileOffset(i)}
+              style={{
+                width: i === mobileOffset ? "16px" : "4px",
+                height: "4px",
+                borderRadius: "2px",
+                backgroundColor: i === mobileOffset ? "#8b8b8b" : "#8b8b8b44",
+                transition: "all 0.2s",
+                cursor: "pointer",
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Active box */}
+      <div ref={activeBox} className="absolute rounded-sm z-0" />
+    </nav>
+  );
 }
 
 Navbar.propTypes = {
