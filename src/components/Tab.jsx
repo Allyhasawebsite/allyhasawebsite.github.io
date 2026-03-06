@@ -6,6 +6,7 @@ import ThreeDTab from "./tabs/ThreeDTab.jsx";
 import ProjectionTab from "./tabs/ProjectionTab";
 import ResumeTab from "./tabs/ResumeTab.jsx";
 import PlaygroundTab from "./tabs/PlaygroundTab.jsx";
+import DemoTab from './tabs/DemoTab.jsx';
 
 const HEADER_HEIGHT = 48;
 const NAVBAR_HEIGHT = 80;
@@ -28,6 +29,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     about:       <AboutTab />,
     design:      <DesignTab />,
     threeD:      <ThreeDTab />,
+    demo:        <DemoTab />,
     projmapping: <ProjectionTab />,
     resume:      <ResumeTab />,
     playground:  <PlaygroundTab />,
@@ -37,6 +39,7 @@ const Tab = ({ activeTab, setActiveTabs }) => {
     about:       { width: "520px", top: "calc(100vh - 420px)", maxHeight: "400px" },
     design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "500px" },
     threeD:      { width: "700px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+    demo:        { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
     projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
     resume:      { width: "520px", top: "calc(100vh - 420px)", maxHeight: "500px" },
     playground:  { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
