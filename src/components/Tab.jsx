@@ -8,8 +8,8 @@ import ResumeTab from "./tabs/ResumeTab.jsx";
 import PlaygroundTab from "./tabs/PlaygroundTab.jsx";
 import DemoTab from './tabs/DemoTab.jsx';
 
-const HEADER_HEIGHT = 48;
-const NAVBAR_HEIGHT = 80;
+const HEADER_HEIGHT = 80;
+const NAVBAR_HEIGHT = 50;
 
 // global ref to track max z-index used so tabs can layer on top of each other
 let maxZIndex = 50;
