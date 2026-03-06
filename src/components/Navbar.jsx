@@ -138,7 +138,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
             aria-label={label}
             className={`
               group relative w-24 flex flex-col items-center px-2 py-3
-              outline outline-1 outline-[#28282B] rounded-md
+              rounded-md
               first:rounded-tl-lg first:rounded-bl-lg
               last:rounded-tr-lg last:rounded-br-lg
               z-10 
