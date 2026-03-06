@@ -51,7 +51,7 @@ const ProjectionTab = () => {
 
       </div>
 
-      {/* Cybercore Process Book Link */}
+      {/* Process Book Link */}
       <a
         href="https://odd-windshield-52a.notion.site/Hair-Is-Everything-31a10c01ab86807eb724fc560bc41145?pvs=73"
         target="_blank"

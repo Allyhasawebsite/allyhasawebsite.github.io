@@ -102,7 +102,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
       label: 'Demo',
       link: '#demo',
       className: 'nav-link',
-      icon: '3d.png',
+      icon: 'demo.png',
       tab: 'demo'
     },
     {
