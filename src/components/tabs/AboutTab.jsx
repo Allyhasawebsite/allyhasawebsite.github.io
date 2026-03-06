@@ -37,16 +37,6 @@ const AboutTab = () => {
         </div>
       </div>
 
-      {/* Image */}
-      <img
-        src="/images/aboutPic.png"
-        alt="About me"
-        className="w-full object-cover"
-        style={{ borderRadius: "4px" }}
-      />
-
-      
-
     </div>
   );
 };
