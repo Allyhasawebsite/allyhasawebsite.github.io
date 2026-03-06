@@ -37,12 +37,12 @@ const Tab = ({ activeTab, setActiveTabs }) => {
 
   const tabConfig = {
     about:       { width: "520px", top: "calc(100vh - 420px)", maxHeight: "400px" },
-    design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "500px" },
+    design:      { width: "700px", top: "calc(100vh - 520px)", maxHeight: "400px" },
     threeD:      { width: "700px", top: "calc(100vh - 420px)", maxHeight: "400px" },
-    demo:        { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
-    projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
-    resume:      { width: "520px", top: "calc(100vh - 420px)", maxHeight: "500px" },
-    playground:  { width: "720px", top: "calc(100vh - 420px)", maxHeight: "500px" },
+    demo:        { width: "720px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+    projmapping: { width: "720px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+    resume:      { width: "520px", top: "calc(100vh - 420px)", maxHeight: "400px" },
+    playground:  { width: "720px", top: "calc(100vh - 420px)", maxHeight: "400px" },
   };
 
   const mobileStyle = {
