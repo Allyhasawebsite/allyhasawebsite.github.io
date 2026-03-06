@@ -1,16 +1,16 @@
 const photos = [
-  { src: "/images/playground/0 Cake.PNG", caption: "Caption here", location: "-, 2024" },
-  { src: "/images/playground/0 Toast.PNG", caption: "Caption here", location: "-, 2024" },
-  { src: "/images/playground/1 Aura.jpg", caption: "Caption here", location: "-, 2024" },
-  { src: "/images/playground/1 goodVibes.jpg", caption: "Caption here", location: "-, 2025" },
-  { src: "/images/playground/1 touchGrass.jpg", caption: "Caption here", location: "-, 2025" },
-  { src: "/images/playground/2 IMG_0727.jpg", caption: "Caption here", location: "-, 2025" },
-  { src: "/images/playground/2 IMG_0728.jpg", caption: "Caption here", location: "-, 2025" },
+  { src: "/images/playground/0 Cake.PNG", caption: "Swiss Roll", medium: "Colour pencil & Procreate" },
+  { src: "/images/playground/0 Toast.PNG", caption: "Toast", medium: "Colour pencil & Procreate" },
+  { src: "/images/playground/1 Aura.jpg", caption: "Aura", medium: "Procreate & Photoshop" },
+  { src: "/images/playground/1 goodVibes.jpg", caption: "Good Vibes Poster", medium: "Procreate & Photoshop" },
+  { src: "/images/playground/1 touchGrass.jpg", caption: "Touch Grass Poster", medium: "Procreate & Photoshop" },
+  { src: "/images/playground/2 IMG_0727.jpg", caption: "Stateside 1", medium: "Procreate, AfterEffect, Madmapper" },
+  { src: "/images/playground/2 IMG_0728.jpg", caption: "Stateside 2", medium: "Procreate, AfterEffect, Madmapper" },
 ];
 
-const PhotoCard = ({ src, caption, location }) => {
+const PhotoCard = ({ src, caption, medium }) => {
   return (
-    <div className="relative group overflow-hidden rounded-sm outline outline-1 outline-[#28282B] break-inside-avoid mb-2">
+    <div className="relative group overflow-hidden rounded-sm break-inside-avoid mb-2">
 
       {/* Photo */}
       <img
@@ -29,7 +29,7 @@ const PhotoCard = ({ src, caption, location }) => {
           {caption}
         </span>
         <span className="font-mono text-[#e0fffe]/60 text-[10px]">
-          {location}
+          {medium}
         </span>
       </div>
 
