@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const videos = [
   {
@@ -17,6 +17,13 @@ const videos = [
 
 const ThreeDTab = () => {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="font-mono text-sm text-[#28282B] flex flex-col gap-0">
@@ -26,7 +33,6 @@ const ThreeDTab = () => {
         <iframe
           key={active}
           src={videos[active].src}
-          frameBorder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
           allowFullScreen
           style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
@@ -34,33 +40,33 @@ const ThreeDTab = () => {
         />
       </div>
 
-      {/* Video selector strip */}
-      <div className="flex border-b border-[#28282B]">
+      {/* Video selector */}
+      <div className="flex border-b border-[#28282B] bg-[#e0fffe]">
         {videos.map((v, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
             style={{ outline: "none" }}
             className={`
-              flex-1 flex items-center justify-between px-3 py-2 text-left transition-colors duration-150
+              flex-1 flex items-center justify-between gap-2 px-4 py-2 text-left transition-colors duration-150 min-w-0
               ${i !== videos.length - 1 ? "border-r border-[#28282B]" : ""}
               ${active === i ? "bg-[#28282B] text-[#e0fffe]" : "bg-transparent hover:bg-[#28282B]/10"}
             `}
           >
-            <span className="text-[10px] opacity-50 mr-2">{v.tag}</span>
-            <span className="flex-1 text-xs font-bold tracking-wide truncate">{v.title}</span>
-            <span className="text-[10px] opacity-40 ml-2">{v.year}</span>
+            <span className={`opacity-50 flex-shrink-0 ${isMobile ? "text-[9px]" : "text-[10px]"}`}>{v.tag}</span>
+            <span className={`flex-1 font-bold tracking-wide truncate ${isMobile ? "text-[9px]" : "text-xs"}`}>{v.title}</span>
+            <span className={`opacity-40 flex-shrink-0 ${isMobile ? "text-[9px]" : "text-[10px]"}`}>{v.year}</span>
           </button>
         ))}
       </div>
 
       {/* Divider */}
-      <div className="overflow-hidden whitespace-nowrap py-2">
-        {"=".repeat(120)}
+      <div className="overflow-hidden whitespace-nowrap py-2 text-[#28282B]/30 bg-[#e0fffe] px-4">
+        <span style={{ fontSize: isMobile ? "10px" : "12px" }}>{"=".repeat(isMobile ? 55 : 110)}</span>
       </div>
 
       {/* Description */}
-      <div className="flex gap-4 pt-4 pb-1">
+      <div className="flex gap-4 pt-4 pb-1 bg-[#e0fffe] px-4">
 
         <div className="flex flex-col text-right items-start gap-0 min-w-[60px]">
           <span className="font-black text-lg leading-none">3D <br/> Works </span>
