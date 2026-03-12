@@ -26,7 +26,14 @@ const App = () => {
           loop
           muted
           playsInline
+          preload="metadata"
           className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-15"
+          onLoadedMetadata={(e) => {
+            e.target.play().catch(() => {
+              // Fallback: retry play if it fails
+              setTimeout(() => e.target.play().catch(() => {}), 500);
+            });
+          }}
         >
           <source src="/background/logo.mp4" type="video/mp4" />
         </video>
