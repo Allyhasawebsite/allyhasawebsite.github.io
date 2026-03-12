@@ -9,12 +9,49 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
   const activeBox = useRef();
   const [mobileOffset, setMobileOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const navContainerRef = useRef();
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  // Swipe handling for mobile
+  useEffect(() => {
+    const container = navContainerRef.current;
+    if (!container || !isMobile) return;
+
+    const handleTouchStart = (e) => {
+      touchStartX.current = e.changedTouches[0].screenX;
+    };
+
+    const handleTouchEnd = (e) => {
+      touchEndX.current = e.changedTouches[0].screenX;
+      const diff = touchStartX.current - touchEndX.current;
+      const minSwipeDistance = 30; // Minimum distance to trigger swipe
+
+      if (Math.abs(diff) < minSwipeDistance) return;
+
+      if (diff > 0) {
+        // Swiped left
+        setMobileOffset(o => Math.min(navItems.length - MOBILE_PAGE_SIZE, o + 1));
+      } else {
+        // Swiped right
+        setMobileOffset(o => Math.max(0, o - 1));
+      }
+    };
+
+    container.addEventListener('touchstart', handleTouchStart, false);
+    container.addEventListener('touchend', handleTouchEnd, false);
+
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart, false);
+      container.removeEventListener('touchend', handleTouchEnd, false);
+    };
+  }, [isMobile]);
 
   const initActiveBox = () => {
     if (!lastActiveLink.current || !activeBox.current) return;
@@ -97,32 +134,7 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
     // mb-6 = 24px bottom margin so nav doesn't hug the screen edge
     <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center font-mono z-50 mb-6">
 
-      <div className="flex items-center gap-3 px-4">
-
-        {/* LEFT ARROW - mobile only */}
-        {isMobile && (
-          <button
-            onClick={() => setMobileOffset(o => Math.max(0, o - 1))}
-            aria-label="Previous"
-            style={{
-              width: "28px",
-              height: "28px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "3px",
-              border: "1px solid",
-              borderColor: canGoLeft ? "#8b8b8b" : "#8b8b8b33",
-              backgroundColor: canGoLeft ? "#e0fffe" : "transparent",
-              color: canGoLeft ? "#28282B" : "#8b8b8b44",
-              fontFamily: "monospace",
-              fontSize: "13px",
-              flexShrink: 0,
-            }}
-          >
-            ←
-          </button>
-        )}
+      <div ref={navContainerRef} className="flex items-center gap-3 px-4">
 
         {/* NAV ITEMS — all same fixed width + height */}
         {visibleItems.map((item) => {
@@ -168,31 +180,6 @@ const Navbar = ({ navOpen, setActiveTabs, activeTabs }) => {
             </a>
           );
         })}
-
-        {/* RIGHT ARROW - mobile only */}
-        {isMobile && (
-          <button
-            onClick={() => setMobileOffset(o => Math.min(maxOffset, o + 1))}
-            aria-label="Next"
-            style={{
-              width: "28px",
-              height: "28px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "3px",
-              border: "1px solid",
-              borderColor: canGoRight ? "#8b8b8b" : "#8b8b8b33",
-              backgroundColor: canGoRight ? "#e0fffe" : "transparent",
-              color: canGoRight ? "#28282B" : "#8b8b8b44",
-              fontFamily: "monospace",
-              fontSize: "13px",
-              flexShrink: 0,
-            }}
-          >
-            →
-          </button>
-        )}
 
       </div>
 
