@@ -166,34 +166,36 @@ const Tab = ({ activeTab, setActiveTabs }) => {
       <div className="flex items-end">
         <div
           ref={tabHandleRef}
-          className={`flex items-center justify-between ${isMobile ? "cursor-default" : "cursor-move drag-handle"}`}
+          className={`flex items-center justify-between relative ${isMobile ? "cursor-default" : "cursor-move drag-handle"}`}
           style={{
             width: "120px",
-            height: "26px",
+            height: "28px",
             backgroundColor: "#8b8b8b",
-            borderRadius: "6px 10px 0 0",
+            borderRadius: "8px 8px 0 0",
             paddingLeft: "12px",
-            paddingRight: "10px",
+            paddingRight: "8px",
             touchAction: "none",
-            gap: "4px",
+            gap: "6px",
+            userSelect: "none",
           }}
         >
           <span
-            className="font-mono font-semibold truncate"
+            className="text-left font-mono font-semibold truncate flex-1"
             style={{
               fontSize: "11px",
               color: "#e0fffe",
               textTransform: "capitalize",
               letterSpacing: "0.04em",
-              maxWidth: "75px",
+              pointerEvents: "none",
             }}
           >
             {activeTab}
           </span>
 
           <button
-            onPointerDown={(e) => e.stopPropagation()}
-            onPointerUp={(e) => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               setActiveTabs((prev) => prev.filter((t) => t !== activeTab));
             }}
@@ -202,16 +204,24 @@ const Tab = ({ activeTab, setActiveTabs }) => {
               border: "none",
               background: "transparent",
               color: "#e0fffe",
-              fontSize: "12px",
+              fontSize: "14px",
               lineHeight: "1",
-              cursor: "pointer",
-              padding: "0",
+              padding: "2px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "16px",
-              height: "16px",
+              width: "20px",
+              height: "20px",
               flexShrink: 0,
+              transition: "transform 0.15s ease, color 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.15)";
+              e.currentTarget.style.color = "rgba(224, 255, 254, 0.8)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.color = "#e0fffe";
             }}
           >
             ✕
