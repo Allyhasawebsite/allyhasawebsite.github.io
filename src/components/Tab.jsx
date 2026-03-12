@@ -172,9 +172,8 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             height: "26px",
             backgroundColor: "#8b8b8b",
             borderRadius: "6px 10px 0 0",
-            clipPath: "polygon(0 100%, 0 20%, 6% 0, 88% 0, 100% 100%)",
             paddingLeft: "12px",
-            paddingRight: "15px",
+            paddingRight: "10px",
             touchAction: "none",
             gap: "4px",
           }}
