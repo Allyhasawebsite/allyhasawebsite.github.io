@@ -199,10 +199,14 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             }}
             style={{
               outline: "none",
+              border: "none",
+              background: "transparent",
               color: "#e0fffe",
               fontSize: "10px",
               marginLeft: "4px",
               lineHeight: 1,
+              cursor: "pointer",
+              padding: "0",
             }}
           >
             ✕
