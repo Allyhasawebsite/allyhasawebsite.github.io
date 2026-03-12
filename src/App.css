@@ -38,7 +38,8 @@ a, button {
 
 html, body {
   height: 100%;
-  margin: 0; 
+  margin: 0;
+  background: linear-gradient(to bottom, #ffffff, #e0fffe);
 }
 
 @media (prefers-reduced-motion: no-preference) {
