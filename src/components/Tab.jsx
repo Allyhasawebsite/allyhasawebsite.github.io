@@ -174,8 +174,9 @@ const Tab = ({ activeTab, setActiveTabs }) => {
             borderRadius: "6px 10px 0 0",
             clipPath: "polygon(0 100%, 0 20%, 6% 0, 88% 0, 100% 100%)",
             paddingLeft: "12px",
-            paddingRight: "10px",
+            paddingRight: "15px",
             touchAction: "none",
+            gap: "4px",
           }}
         >
           <span
@@ -202,11 +203,16 @@ const Tab = ({ activeTab, setActiveTabs }) => {
               border: "none",
               background: "transparent",
               color: "#e0fffe",
-              fontSize: "10px",
-              marginLeft: "4px",
-              lineHeight: 1,
+              fontSize: "12px",
+              lineHeight: "1",
               cursor: "pointer",
               padding: "0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "16px",
+              height: "16px",
+              flexShrink: 0,
             }}
           >
             ✕
